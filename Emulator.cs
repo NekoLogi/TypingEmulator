@@ -17,11 +17,13 @@
             foreach (char c in line)
             {
                 int typingSpeed = Rnd.Next(1, 130);
+
                 if (Chance(5))
-                {
                     typingSpeed = typingSpeed * 10;
-                }
+                else if (char.IsWhiteSpace(c))
+                    typingSpeed = 0;
                 Thread.Sleep(typingSpeed);
+
 
                 if (Chance(1))
                 {
