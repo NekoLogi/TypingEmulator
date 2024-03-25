@@ -25,7 +25,7 @@
                 Thread.Sleep(typingSpeed);
 
 
-                if (Chance(1))
+                if (Chance(1) && !char.IsWhiteSpace(c))
                 {
                     char randomChar = (char)Rnd.Next(97, 123);
                     Console.Write(randomChar);
