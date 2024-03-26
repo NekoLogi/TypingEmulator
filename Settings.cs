@@ -27,7 +27,7 @@ namespace TypingEmulator
 
         public class Emulator
         {
-            public int TypingSpeedFalloffChance = 5;
+            public double TypingSpeedFalloffChance = 5;
             public int LowestTypeFalloffMS = 1;
             public int HighestTypeFalloffMS = 130;
             public int FalloffMultiplier = 10;
