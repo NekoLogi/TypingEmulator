@@ -23,7 +23,7 @@
                     Settings.LowestTypeFalloffMS,
                     Settings.HighestTypeFalloffMS);
 
-                if (Chance(Settings.TypingSpeedFalloffPercentage) && char.IsWhiteSpace(c) && Settings.AllowWhitespaceFalloff)
+                if (Chance(Settings.TypingSpeedFalloffChance) && char.IsWhiteSpace(c) && Settings.AllowWhitespaceFalloff)
                     typingSpeed *= Settings.FalloffMultiplier;
                 else if (char.IsWhiteSpace(c) || !Settings.AllowWhitespaceFalloff)
                     typingSpeed = 0;
