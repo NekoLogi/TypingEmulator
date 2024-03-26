@@ -1,9 +1,12 @@
 ﻿namespace TypingEmulator
 {
-    internal class Emulator
+    internal class Emulator(Settings.Emulator emulator)
     {
         private static Random Rnd = new Random();
-        public static void Emulate(string[] content)
+        public Settings.Emulator Settings { get; set; } = emulator;
+
+
+        public void Emulate(string[] content)
         {
             foreach (var line in content)
             {
@@ -12,33 +15,45 @@
             }
         }
 
-        private static void TypeLine(string line)
+        private void TypeLine(string line)
         {
             foreach (char c in line)
             {
-                int typingSpeed = Rnd.Next(1, 130);
+                int typingSpeed = Rnd.Next(
+                    Settings.LowestTypeFalloffMS,
+                    Settings.HighestTypeFalloffMS);
 
-                if (Chance(5))
-                    typingSpeed = typingSpeed * 10;
-                else if (char.IsWhiteSpace(c))
+                if (Chance(Settings.TypingSpeedFalloffPercentage) && char.IsWhiteSpace(c) && Settings.AllowWhitespaceFalloff)
+                    typingSpeed *= Settings.FalloffMultiplier;
+                else if (char.IsWhiteSpace(c) || !Settings.AllowWhitespaceFalloff)
                     typingSpeed = 0;
+
                 Thread.Sleep(typingSpeed);
 
                 MakeTypo(c, typingSpeed);
                 Console.Write(c);
             }
+            if (Chance(Settings.ThinkingFalloffChance))
+                Thread.Sleep(Rnd.Next(
+                    Settings.LowestThinkingFalloffMS,
+                    Settings.HighestThinkingFalloffMS));
         }
 
-        private static void MakeTypo(char c, int typingSpeed)
+        private void MakeTypo(char c, int typingSpeed)
         {
-            if (Chance(1) && !char.IsWhiteSpace(c))
+            if (Chance(Settings.TypoChance) && !char.IsWhiteSpace(c))
             {
                 char randomChar = (char)Rnd.Next(97, 123);
                 Console.Write(randomChar);
 
-                Thread.Sleep(typingSpeed);
-                Console.Write("\b");
+                if (Chance(Settings.ThinkingFalloffChance))
+                    Thread.Sleep(Rnd.Next(
+                        Settings.LowestThinkingFalloffMS,
+                        Settings.HighestThinkingFalloffMS));
+                else
+                    Thread.Sleep(typingSpeed);
 
+                Console.Write("\b");
                 Thread.Sleep(typingSpeed);
             }
         }

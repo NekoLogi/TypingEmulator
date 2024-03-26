@@ -2,31 +2,31 @@
 {
     internal class Program
     {
-        private const string PATH = "data/";
-        private const string FILE = "content.txt";
+        public static Settings Settings = new Settings().Load();
 
         static void Main(string[] args)
         {
             CheckStructure();
 
-            string[] content = File.ReadAllLines(PATH + FILE);
+            string[] content = File.ReadAllLines(Settings.General.PATH + Settings.general.FileName);
 
             Console.WriteLine("Press 'Enter' to start emutation.");
             Console.ReadLine();
             Console.Clear();
 
-            Emulator.Emulate(content);
+            new Emulator(Settings.emulator)
+                .Emulate(content);
         }
 
         private static void CheckStructure()
         {
-            if (!Directory.Exists(PATH))
-                Directory.CreateDirectory(PATH);
-            if (!File.Exists(PATH + FILE))
+            if (!Directory.Exists(Settings.General.PATH))
+                Directory.CreateDirectory(Settings.General.PATH);
+            if (!File.Exists(Settings.General.PATH + Settings.general.FileName))
             {
-                Console.WriteLine($"No {FILE} in:");
+                Console.WriteLine($"No {Settings.general.FileName} in:");
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine(Path.GetFullPath(PATH));
+                Console.WriteLine(Path.GetFullPath(Settings.General.PATH));
                 Console.ResetColor();
 
                 Console.WriteLine("\nPress 'Enter' to close.");
