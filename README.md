@@ -33,6 +33,6 @@
 2. Run the .exe file.
 # Problem solving
 ### The .exe file does not start or shows an error message, similar to "Download .Net 8.0 to run the application".
-1. Go inside the "redist" folder, run the .exe file named "Placeholder" and go through the proceedure.
+1. Go inside the "redist" folder, run the .exe file named "dotnet-sdk-8.0.203-win-x64.exe" and go through the proceedure.
 - If it still doesn't work, restart your PC and try to run it again.
 - If it still doesn't work, you can contact me for help.
